@@ -1,0 +1,15 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "yura-okilka",
+  "description": "Yura Okilka's Claude Code plugins",
+  "owner": {
+    "name": "Yura Okilka"
+  },
+  "plugins": [
+    {
+      "name": "toast-notify",
+      "source": "./toast-notify",
+      "description": "Windows 11 toast notifications for Claude Code — click the toast to focus the terminal window that triggered it."
+    }
+  ]
+}

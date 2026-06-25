@@ -1,0 +1,13 @@
+# OS cruft
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editors / IDEs
+.idea/
+.vs/
+.vscode/
+*.user
+
+# Claude Code local state (if you open this repo in Claude Code)
+.claude/settings.local.json

@@ -1,0 +1,11 @@
+{
+  "name": "toast-notify",
+  "description": "Windows 11 toast notifications for Claude Code — click the toast to focus the terminal window that triggered it.",
+  "version": "1.0.0",
+  "license": "MIT",
+  "author": {
+    "name": "Yura Okilka"
+  },
+  "homepage": "https://github.com/yura-okilka/claude-plugins",
+  "repository": "https://github.com/yura-okilka/claude-plugins"
+}
