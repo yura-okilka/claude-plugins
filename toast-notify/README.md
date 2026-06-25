@@ -18,6 +18,8 @@ triggered it back to the foreground**.
 - On click, walks the hook's parent process chain to find the terminal window that
   launched Claude (Windows Terminal, conhost, VS Code, JetBrains Rider, …) and focuses
   it via a registered `claudecode:` protocol handler.
+- Adds a small context line showing the project folder and git branch (from the hook's
+  `cwd`), e.g. `my-project · main` — best-effort, omitted if `cwd` isn't a git repo.
 
 ## Install
 

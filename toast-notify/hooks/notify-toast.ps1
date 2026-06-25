@@ -21,6 +21,7 @@ $ErrorActionPreference = 'Stop'
 # Notification events carry a "message"/"title" and hook_event_name="Notification";
 # Stop events carry hook_event_name="Stop" and no message.
 $event = ''
+$cwd   = ''
 try {
     $raw = [Console]::In.ReadToEnd()
     if ($raw) {
@@ -28,6 +29,7 @@ try {
         if ($data.hook_event_name) { $event   = [string]$data.hook_event_name }
         if ($data.message)         { $Message = [string]$data.message }
         if ($data.title)           { $Title   = [string]$data.title }
+        if ($data.cwd)             { $cwd     = [string]$data.cwd }
     }
 } catch { }
 
@@ -114,6 +116,26 @@ if (Test-Path $iconPath) {
     $logo = "<image placement=`"appLogoOverride`" hint-crop=`"circle`" src=`"$iconUri`"/>"
 }
 
+# Context line (attribution): "<project> [. <branch>]" from the hook's cwd.
+# Branch via git; skipped if cwd isn't a repo or git isn't on PATH. Best-effort:
+# any failure just omits the line so the toast still shows.
+$attrText = ''
+try {
+    if ($cwd) {
+        $project = Split-Path $cwd -Leaf
+        $branch  = ''
+        try {
+            $b = (& git -C $cwd rev-parse --abbrev-ref HEAD 2>$null)
+            if ($LASTEXITCODE -eq 0 -and $b) { $branch = ([string]$b).Trim() }
+        } catch { }
+        $sep     = [char]0x00B7
+        $context = if ($branch) { "$project $sep $branch" } else { "$project" }
+        if ($context) {
+            $attrText = "<text placement=`"attribution`">$([System.Security.SecurityElement]::Escape($context))</text>"
+        }
+    }
+} catch { $attrText = '' }
+
 # --- Build and show the toast --------------------------------------------
 [void][Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, ContentType = WindowsRuntime]
 [void][Windows.UI.Notifications.ToastNotification,        Windows.UI.Notifications, ContentType = WindowsRuntime]
@@ -126,6 +148,7 @@ $xml = @"
       $logo
       <text>$([System.Security.SecurityElement]::Escape($title))</text>
       <text>$([System.Security.SecurityElement]::Escape($message))</text>
+      $attrText
     </binding>
   </visual>
   <audio src="ms-winsoundevent:Notification.Default"/>
