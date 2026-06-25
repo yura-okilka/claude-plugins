@@ -45,7 +45,7 @@ if (-not $Message) {
 # --- Register an AppUserModelId so the toast reads "Claude Code" ----------
 # (idempotent; HKCU write, no admin needed). DisplayName + IconUri drive how
 # the toast is attributed in the banner and in Action Center.
-$appId    = 'Claude.Code'
+$appId    = 'Claude.Code.Toast'   # stable id; a fresh id is needed to bust Windows' cached header icon
 $regPath  = "HKCU:\Software\Classes\AppUserModelId\$appId"
 $iconPath = Join-Path $PSScriptRoot 'claude.png'
 if (-not (Test-Path $regPath)) { New-Item -Path $regPath -Force | Out-Null }
