@@ -1,6 +1,6 @@
 # toast-notify
 
-Native **Windows 11 toast notifications** for Claude Code. When Claude needs your
+Native **Windows toast notifications** (Windows 10 and 11) for Claude Code. When Claude needs your
 attention (a permission prompt, or a turn completing), you get a real Windows toast
 attributed to **Claude Code** — and **clicking it brings the terminal window that
 triggered it back to the foreground**.

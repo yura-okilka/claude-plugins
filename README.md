@@ -14,7 +14,7 @@ Then browse with `/plugin`, or install a plugin directly (see below).
 
 | Plugin | Description | Install |
 | ------ | ----------- | ------- |
-| [`toast-notify`](./toast-notify) | Windows 11 toast notifications; click the toast to focus the terminal window that triggered it. **Windows only.** | `/plugin install toast-notify@yura-okilka` |
+| [`toast-notify`](./toast-notify) | Windows desktop notifications for Claude Code, with click-to-focus for the originating terminal. **Windows 10/11.** | `/plugin install toast-notify@yura-okilka` |
 
 ## Updates
 

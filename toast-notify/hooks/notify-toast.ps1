@@ -1,13 +1,14 @@
 #Requires -Version 5
-# Claude Code "Notification" hook -> native Windows 11 toast.
+# Claude Code "Notification" hook -> native Windows toast (Windows 10/11).
 # Reads the hook JSON from stdin (fields: message, title) and pops a toast
 # attributed to "Claude Code". Run with Windows PowerShell (powershell.exe),
 # NOT pwsh 7 -- the WinRT type projection below relies on 5.1.
 
 param(
-    # Defaults used by the Notification hook; the Stop hook passes its own text.
+    # Title is fixed; per-event messages are resolved below from the hook payload.
+    # An explicit -Message still overrides everything (handy for testing).
     [string]$Title   = 'Claude Code',
-    [string]$Message = 'Claude Code needs your attention',
+    [string]$Message = '',
     # When set (used by the Stop hook), skip the toast if the triggering terminal
     # is already the foreground window -- avoids a toast on every turn while the
     # user is actively watching. The Notification hook omits this and always fires.
@@ -17,16 +18,27 @@ param(
 $ErrorActionPreference = 'Stop'
 
 # --- Parse the hook payload (JSON on stdin) ------------------------------
-# Notification events carry a "message"/"title"; if present they override the
-# parameters above. Stop events have no message, so the -Message arg stands.
+# Notification events carry a "message"/"title" and hook_event_name="Notification";
+# Stop events carry hook_event_name="Stop" and no message.
+$event = ''
 try {
     $raw = [Console]::In.ReadToEnd()
     if ($raw) {
         $data = $raw | ConvertFrom-Json
-        if ($data.message) { $Message = [string]$data.message }
-        if ($data.title)   { $Title   = [string]$data.title }
+        if ($data.hook_event_name) { $event   = [string]$data.hook_event_name }
+        if ($data.message)         { $Message = [string]$data.message }
+        if ($data.title)           { $Title   = [string]$data.title }
     }
 } catch { }
+
+# --- Default message per event (defined here, not on the hook command) ----
+# Notification text comes from the payload above; Stop has none, so supply it.
+if (-not $Message) {
+    switch ($event) {
+        'Stop'  { $Message = 'Turn complete. Ready for your input.' }
+        default { $Message = 'Claude Code needs your attention' }
+    }
+}
 
 # --- Register an AppUserModelId so the toast reads "Claude Code" ----------
 # (idempotent; HKCU write, no admin needed). DisplayName + IconUri drive how

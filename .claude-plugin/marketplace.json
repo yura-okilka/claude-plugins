@@ -9,7 +9,7 @@
     {
       "name": "toast-notify",
       "source": "./toast-notify",
-      "description": "Windows 11 toast notifications for Claude Code — click the toast to focus the terminal window that triggered it."
+      "description": "Windows desktop notifications for Claude Code, with click-to-focus for the originating terminal."
     }
   ]
 }

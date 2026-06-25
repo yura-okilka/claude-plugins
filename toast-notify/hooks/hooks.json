@@ -17,7 +17,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"${CLAUDE_PLUGIN_ROOT}/hooks/notify-toast.ps1\" -Message \"Turn complete. Ready for your input.\" -OnlyIfUnfocused",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"${CLAUDE_PLUGIN_ROOT}/hooks/notify-toast.ps1\" -OnlyIfUnfocused",
             "async": true
           }
         ]
