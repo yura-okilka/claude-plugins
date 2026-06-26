@@ -34,6 +34,22 @@ Then restart Claude Code (or run `/reload-plugins`) and trigger any notification
 - Bringing the window forward works in everyday use; once in a while Windows' focus rules
   flash the taskbar button instead of switching.
 
+## Uninstalling
+
+Removing the plugin stops the notifications, but it leaves two `HKCU` registry entries the
+script created at runtime — Claude Code has no on-uninstall hook, so they can't be removed
+automatically. They're harmless (nothing runs once the hooks are gone), but to clear them
+fully, run this in PowerShell:
+
+```powershell
+Remove-Item "HKCU:\Software\Classes\AppUserModelId\Claude.Code.Toast" -Recurse -Force
+Remove-Item "HKCU:\Software\Classes\claudecode" -Recurse -Force
+```
+
+The first removes the leftover **Claude Code** entry from Windows notification settings; the
+second removes the `claudecode:` click-to-focus protocol. Nothing else is left behind — no
+files outside the plugin folder, no services or startup entries.
+
 ## How it works (for the curious)
 
 Everything runs through Claude Code's `Notification` and `Stop` hooks — no daemon, no
