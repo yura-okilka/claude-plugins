@@ -1,25 +1,21 @@
 # toast-notify
 
-Native **Windows toast notifications** (Windows 10 and 11) for Claude Code. When Claude needs your
-attention (a permission prompt, or a turn completing), you get a real Windows toast
-attributed to **Claude Code** — and **clicking it brings the terminal window that
-triggered it back to the foreground**.
+Desktop notifications for Claude Code on Windows — so you can look away while Claude
+works and get pinged the moment it needs you or finishes. **Click the notification to
+jump straight back to the terminal that sent it.**
 
-> **Windows only.** This plugin uses `powershell.exe`, WinRT toast APIs, and an HKCU
-> registry write. On macOS/Linux the hook simply errors per event (non-fatal) and does
-> nothing.
+> **Works on Windows 10 and 11.** On macOS/Linux it simply has no effect (the hook can't
+> run, and Claude Code ignores that) — safe to leave installed in a shared config.
 
-## What it does
+## What you get
 
-- Fires a toast on the `Notification` event (e.g. a permission prompt).
-- Fires a toast on the `Stop` event (turn complete) **only when the triggering terminal
-  is not already the foreground window** (`-OnlyIfUnfocused`) — so you aren't toasted on
-  every turn while you're actively watching.
-- On click, walks the hook's parent process chain to find the terminal window that
-  launched Claude (Windows Terminal, conhost, VS Code, JetBrains Rider, …) and focuses
-  it via a registered `claudecode:` protocol handler.
-- Adds a small context line showing the project folder and git branch (from the hook's
-  `cwd`), e.g. `my-project · main` — best-effort, omitted if `cwd` isn't a git repo.
+- A notification when **Claude needs your input** — like a permission prompt.
+- A "turn complete" notification when **Claude finishes** — but only if you've clicked
+  away, so you're not pinged while you're already watching.
+- **Click it and the right terminal window comes to the front.** Works with Windows
+  Terminal, the classic console, VS Code, and JetBrains IDEs.
+- Each notification shows **which project and git branch** it came from (e.g.
+  `my-project · main`), so you can tell sessions apart at a glance.
 
 ## Install
 
@@ -28,30 +24,45 @@ triggered it back to the foreground**.
 /plugin install toast-notify@yura-okilka
 ```
 
-Restart Claude Code (or run `/reload-plugins`) and trigger any notification to test.
+Then restart Claude Code (or run `/reload-plugins`) and trigger any notification to try it.
 
-## Files
+## Good to know
 
-| File | Purpose |
-| ---- | ------- |
-| `hooks/hooks.json` | Registers the `Notification` and `Stop` hooks. |
-| `hooks/notify-toast.ps1` | Builds and shows the toast; registers the AppUserModelId + `claudecode:` protocol; captures the triggering window. |
-| `hooks/focus-window.ps1` | Brings a window to the foreground (P/Invoke into `user32`, with the `AttachThreadInput` trick to beat the foreground lock). |
-| `hooks/focus-launch.vbs` | Hidden launcher so clicking the toast causes no console flash. |
-| `hooks/claude.png` | The toast icon (96×96). |
+- It focuses the **window**, not a specific tab — Windows has no way to switch to a
+  particular terminal tab, so if Claude's session is in a background tab you'll land on
+  the window and may need to click over to the tab.
+- Bringing the window forward works in everyday use; once in a while Windows' focus rules
+  flash the taskbar button instead of switching.
 
-## Known limitations
+## How it works (for the curious)
 
-- **Window, not tab.** It focuses the *window*; there is no public API to switch to a
-  specific terminal tab/pane in Windows Terminal, VS Code, or Rider.
-- **Multi-window single-process** hosts (some Windows Terminal configs) focus the
-  process's main window, which may not be the exact one.
-- **Foreground steal** is reliable in the common case; Windows' focus-stealing
-  prevention may occasionally flash the taskbar instead of switching.
+Everything runs through Claude Code's `Notification` and `Stop` hooks — no daemon, no
+dependencies, nothing running between notifications. Each hook pipes its JSON payload to a
+Windows PowerShell script on stdin.
 
-## Uninstall / notes
+**The toast.** `notify-toast.ps1` builds a native Windows toast via the WinRT
+`ToastNotificationManager` (that's why it runs under `powershell.exe` 5.1, not pwsh 7). On
+first run it registers an AppUserModelId under `HKCU\Software\Classes\AppUserModelId` so
+the toast is attributed to **Claude Code** with the bundled icon. The `Stop` hook passes
+`-OnlyIfUnfocused`, which suppresses the toast when the triggering terminal is already the
+foreground window.
 
-- If you previously added these hooks directly to `~/.claude/settings.json`, remove
-  those `Notification`/`Stop` blocks after installing — otherwise toasts fire twice.
-- The `claudecode:` protocol registration self-heals: `notify-toast.ps1` rewrites it
-  (idempotently) on each run, so it always points at the current plugin version.
+**Click-to-focus.** The toast is built with `activationType="protocol"` and a `launch`
+URI like `claudecode:focus?hwnd=…&pid=…`, carrying the handle of the terminal that fired
+the hook (found by walking the hook's parent process chain up to the first window-owning
+ancestor). Clicking it invokes a `claudecode:` protocol handler registered in `HKCU`,
+which runs `focus-launch.vbs` (a hidden launcher, so no console flash) →
+`focus-window.ps1`. That script brings the window forward with `user32` P/Invoke —
+`SetForegroundWindow` plus the `AttachThreadInput` trick to get past Windows' foreground
+lock — restoring it first if it was minimized.
+
+**Context line.** The `project · branch` line comes from the hook payload's `cwd` (leaf
+folder) and `git rev-parse --abbrev-ref HEAD` — best-effort, omitted if it isn't a repo.
+
+| File | What it does |
+| ---- | ------------ |
+| `hooks/hooks.json` | Registers the `Notification` and `Stop` hooks |
+| `hooks/notify-toast.ps1` | Builds/shows the toast; registers the AppUserModelId + `claudecode:` protocol; finds the triggering window |
+| `hooks/focus-window.ps1` | Brings a window to the foreground (`user32` P/Invoke + `AttachThreadInput` to beat the foreground lock) |
+| `hooks/focus-launch.vbs` | Hidden launcher so clicking the toast causes no console flash |
+| `hooks/claude.png` | The toast icon (96×96, circular) |
