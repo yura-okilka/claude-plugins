@@ -65,6 +65,12 @@ the toast is attributed to **Claude Code** with the bundled icon. The `Stop` hoo
 `-OnlyIfUnfocused`, which suppresses the toast when the triggering terminal is already the
 foreground window.
 
+**Message text.** For `Notification` events the wording is Claude Code's own — it ships the
+text (e.g. _"Claude is waiting for your input"_ or _"Claude needs your permission to use
+…"_) in the payload's `message` field, and the script just relays it. `Stop` events carry
+no message, so the script supplies its own _"Turn complete. Ready for your input."_ The
+notification title is always **Claude Code**.
+
 **Click-to-focus.** The toast is built with `activationType="protocol"` and a `launch`
 URI like `claudecode:focus?hwnd=…&pid=…`, carrying the handle of the terminal that fired
 the hook (found by walking the hook's parent process chain up to the first window-owning
