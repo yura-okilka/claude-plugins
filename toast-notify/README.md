@@ -7,6 +7,8 @@ jump straight back to the terminal that sent it.**
 > **Works on Windows 10 and 11.** On macOS/Linux it simply has no effect (the hook can't
 > run, and Claude Code ignores that) — safe to leave installed in a shared config.
 
+![A Claude Code toast notification reading "Turn complete. Ready for your input." with a "my-project · main" context line](docs/toast.png)
+
 ## What you get
 
 - A notification when **Claude needs your input** — like a permission prompt.
