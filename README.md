@@ -1,5 +1,7 @@
 # claude-plugins
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 A personal [Claude Code](https://code.claude.com) plugin marketplace.
 
 ## Add this marketplace
