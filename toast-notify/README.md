@@ -59,8 +59,8 @@ dependencies, nothing running between notifications. Each hook pipes its JSON pa
 Windows PowerShell script on stdin.
 
 **The toast.** `notify-toast.ps1` builds a native Windows toast via the WinRT
-`ToastNotificationManager` (that's why it runs under `powershell.exe` 5.1, not pwsh 7). On
-first run it registers an AppUserModelId under `HKCU\Software\Classes\AppUserModelId` so
+`ToastNotificationManager` (that's why it runs under `powershell.exe` 5.1, not `pwsh` 7). On
+first run it registers an `AppUserModelId` under `HKCU\Software\Classes\AppUserModelId` so
 the toast is attributed to **Claude Code** with the bundled icon. The `Stop` hook passes
 `-OnlyIfUnfocused`, which suppresses the toast when the triggering terminal is already the
 foreground window.
@@ -86,7 +86,7 @@ folder) and `git rev-parse --abbrev-ref HEAD` — best-effort, omitted if it isn
 | File | What it does |
 | ---- | ------------ |
 | `hooks/hooks.json` | Registers the `Notification` and `Stop` hooks |
-| `hooks/notify-toast.ps1` | Builds/shows the toast; registers the AppUserModelId + `claudecode:` protocol; finds the triggering window |
+| `hooks/notify-toast.ps1` | Builds/shows the toast; registers the `AppUserModelId` + `claudecode:` protocol; finds the triggering window |
 | `hooks/focus-window.ps1` | Brings a window to the foreground (`user32` P/Invoke + `AttachThreadInput` to beat the foreground lock) |
 | `hooks/focus-launch.vbs` | Hidden launcher so clicking the toast causes no console flash |
 | `hooks/claude.png` | The toast icon (96×96, circular) |
