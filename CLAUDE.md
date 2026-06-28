@@ -8,8 +8,9 @@ A personal Claude Code **plugin marketplace** — a catalog of independent plugi
 
 ## Key Rules
 
-- **README.md must be kept up to date** — top-level and the plugin's own — whenever
-  behavior, hooks, or install steps change. They are the primary user docs.
+- **The top-level README.md must be kept up to date** — each plugin's full docs live in its
+  `### <plugin>` section there — whenever behavior, hooks, or install steps change. It is the
+  primary user doc.
 - Content is MIT-licensed. This is a personal project by Yura Okilka.
 - **No personal configuration** — scripts must be generic, with no hardcoded personal
   paths, machine-specific settings, or editor preferences.

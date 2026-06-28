@@ -13,7 +13,7 @@ show native Windows toast notifications. It's worth being explicit about what it
   - `HKCU\Software\Classes\claudecode` — the `claudecode:` protocol used for
     click-to-focus.
 
-  Both are per-user (never `HKLM`), and the [README](plugins/toast-notify/README.md#uninstalling)
+  Both are per-user (never `HKLM`), and the [README](README.md#uninstalling)
   documents how to remove them.
 - **No files are written outside the plugin folder**, and nothing keeps running between
   notifications — the hooks execute, show the toast, and exit.
