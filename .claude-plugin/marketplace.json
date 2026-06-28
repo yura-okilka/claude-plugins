@@ -8,7 +8,7 @@
   "plugins": [
     {
       "name": "toast-notify",
-      "source": "./toast-notify",
+      "source": "./plugins/toast-notify",
       "description": "Windows desktop notifications for Claude Code, with click-to-focus for the originating terminal."
     }
   ]
