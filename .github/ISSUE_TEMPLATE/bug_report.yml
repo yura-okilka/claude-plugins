@@ -1,0 +1,59 @@
+name: Bug report
+description: Something in a plugin isn't working as expected.
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report! Please fill in the details below so the issue can be reproduced.
+        For security vulnerabilities, do **not** open a public issue — see the Security policy.
+  - type: dropdown
+    id: plugin
+    attributes:
+      label: Plugin
+      description: Which plugin does this affect?
+      options:
+        - toast-notify
+        - marketplace / other
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A clear description of the bug and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Minimal steps that trigger the bug.
+      placeholder: |
+        1. Install the plugin with ...
+        2. Run ...
+        3. See ...
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: |
+        toast-notify is Windows-specific, so these details matter.
+      value: |
+        - Windows version (e.g. 11 23H2):
+        - Terminal app (Windows Terminal / VS Code / pwsh console / other):
+        - PowerShell version (`$PSVersionTable.PSVersion`):
+        - Claude Code version (`claude --version`):
+        - Plugin version (`plugin.json` `version`):
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs or screenshots
+      description: Paste any error output or attach a screenshot. Optional.
+    validations:
+      required: false
