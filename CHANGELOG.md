@@ -1,9 +1,7 @@
 # Changelog
 
 This repo ships independent Claude Code plugins. Version headings use the values from
-`plugins/<plugin>/.claude-plugin/plugin.json`; they are **not** git tags. Bumping a plugin's
-`version` and pushing to `main` is what delivers an update to users — see the repo
-[README](README.md#updates).
+`plugins/<plugin>/.claude-plugin/plugin.json`; they are **not** git tags.
 
 Entries are newest first.
 
