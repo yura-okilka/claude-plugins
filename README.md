@@ -51,7 +51,7 @@ straight back to the terminal that sent it.**
 
 ![A Claude Code toast notification reading "Turn complete. Ready for your input." with a "my-project · main" context line](docs/toast.png)
 
-**What you get:**
+#### What you get
 
 - A notification when **Claude needs your input** — like a permission prompt.
 - A "turn complete" notification when **Claude finishes** — but only if you've clicked away,

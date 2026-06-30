@@ -29,7 +29,7 @@ A personal Claude Code **plugin marketplace** — a catalog of independent plugi
   Anything shipped to consumers via the plugin is a release artifact.
 - **Changelog** — when bumping a plugin version, update `CHANGELOG.md` in the same change.
   Version headings use the plugin name and version
-  (e.g. `## toast-notify v1.0.0 - YYYY-MM-DD`), not tags. Keep entries grouped: New Features,
+  (e.g. `## toast-notify v1.0.0 - YYYY-MM-DD`), not tags. Keep entries grouped: Features,
   Improvements, Bug Fixes, Other.
 - **PowerShell** — hooks run under `powershell.exe` (Windows PowerShell 5.1), not `pwsh` 7,
   because the WinRT toast APIs require it; the hook commands hardcode `powershell.exe`. Keep
