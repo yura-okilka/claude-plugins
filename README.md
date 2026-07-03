@@ -12,6 +12,7 @@ Add the marketplace, then install the plugins you want:
 /plugin marketplace add yura-okilka/claude-plugins
 
 /plugin install toast-notify@yura-okilka
+/plugin install hermes-tweet@yura-okilka
 ```
 
 Test a plugin locally without publishing:
@@ -39,8 +40,13 @@ what publishes an update.
 | Plugin | Description |
 |--------|-------------|
 | [toast-notify](#toast-notify) | Windows desktop notifications with click-to-focus. **Windows 10/11.** |
+| [hermes-tweet](#hermes-tweet) | Hermes Agent X/Twitter research, reads, and gated actions via Xquik. |
 
 ### toast-notify
+
+### hermes-tweet
+
+Hermes Tweet adds X/Twitter research, profile reads, post reads, and gated action tools for Hermes Agent users. Exploratory catalog access works without a key; read tools require `XQUIK_API_KEY`, and action tools also require `HERMES_TWEET_ENABLE_ACTIONS=true`.
 
 Desktop notifications for Claude Code on Windows — so you can look away while Claude works
 and get pinged the moment it needs you or finishes. **Click the notification to jump
