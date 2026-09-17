@@ -1,7 +1,7 @@
 {
   "name": "toast-notify",
   "description": "Windows desktop notifications for Claude Code, with click-to-focus for the originating terminal.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "author": {
     "name": "Yura Okilka"

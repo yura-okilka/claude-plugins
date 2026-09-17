@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"${CLAUDE_PLUGIN_ROOT}/hooks/notify-toast.ps1\""
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -Command \"& '${CLAUDE_PLUGIN_ROOT}/hooks/notify-toast.ps1'\""
           }
         ]
       }
@@ -17,7 +17,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"${CLAUDE_PLUGIN_ROOT}/hooks/notify-toast.ps1\" -OnlyIfUnfocused",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -Command \"& '${CLAUDE_PLUGIN_ROOT}/hooks/notify-toast.ps1' -OnlyIfUnfocused\"",
             "async": true
           }
         ]
