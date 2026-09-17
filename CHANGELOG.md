@@ -5,6 +5,18 @@ This repo ships independent Claude Code plugins. Version headings use the values
 
 Entries are newest first.
 
+## toast-notify v1.0.1 - 2026-09-17
+
+### Bug Fixes
+
+- Both hooks now work when Claude Code runs inside **WSL**. `${CLAUDE_PLUGIN_ROOT}` expands
+  to a Linux path there, which `powershell.exe -File` cannot open, so every hook failed and
+  no toast ever appeared. The hook commands now invoke the script through PowerShell's call
+  operator (`-Command "& '<path>'"`) instead of `-File`: that resolves the path through the
+  PowerShell provider, and because WSL interop starts the process at
+  `\\wsl.localhost\<distro>\...`, the Linux path resolves correctly. Native Windows
+  behavior is unchanged.
+
 ## toast-notify v1.0.0 - 2026-06-28
 
 Initial release.

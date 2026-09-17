@@ -46,8 +46,10 @@ Desktop notifications for Claude Code on Windows — so you can look away while 
 and get pinged the moment it needs you or finishes. **Click the notification to jump
 straight back to the terminal that sent it.**
 
-> **Works on Windows 10 and 11.** On macOS/Linux it simply has no effect (the hook can't
-> run, and Claude Code ignores that) — safe to leave installed in a shared config.
+> **Works on Windows 10 and 11**, including Claude Code running inside **WSL** — the
+> toasts appear on the Windows desktop and click-to-focus still finds the terminal. On
+> macOS/Linux it simply has no effect (the hook can't run, and Claude Code ignores that)
+> — safe to leave installed in a shared config.
 
 ![A Claude Code toast notification reading "Turn complete. Ready for your input." with a "my-project · main" context line](docs/toast.png)
 
